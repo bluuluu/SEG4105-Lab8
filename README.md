@@ -27,3 +27,8 @@ python3 -m unittest discover -s tests -v
 
 This is a local teaching application. It has no authentication and should be
 run on localhost, not exposed as a public multi-user service.
+
+## Documentation
+- [Software Components](docs/COMPONENTS.md)
+- [System Architecture](docs/ARCHITECTURE.md)
+- [Development Methodology](docs/METHODOLOGY.md)
