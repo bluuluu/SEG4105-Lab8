@@ -52,3 +52,8 @@ The image runs as UID 10001. It contains no accounts, credentials or saved tasks
 - `feature/add-documentation`: initial README, reviewed and merged via PR.
 - `docs/architecture-and-methodology`: three technical documents and README index.
 - Linked documentation issue closed automatically through the second merged PR.
+
+## Lab report and evidence
+- [Lab 8 report (PDF)](docs/SEG4105%20-%20Lab%208.pdf)
+- [Commands](docs/LAB_COMMANDS.txt)
+- [Screenshots](docs/screenshots/)

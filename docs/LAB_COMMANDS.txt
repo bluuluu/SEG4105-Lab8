@@ -1,0 +1,71 @@
+SEG4105 Lab 8 - Group Task Board
+Due: November 30 2026
+Repository: https://github.com/bluuluu/SEG4105-Lab8
+Image: bryanluu123/seg4105-lab8:1.0 and :latest
+
+1. Create an empty public GitHub repository (existing empty SEG4105-Lab8 used).
+2. Initialize and push source:
+   git init
+   git symbolic-ref HEAD refs/heads/main
+   # Create .gitignore before staging.
+   git add .gitignore requirements.txt taskboard tests .github
+   git commit -m "added group task board"
+   git remote add origin https://github.com/bluuluu/SEG4105-Lab8.git
+   git push -u origin main
+   # A recent Git also supports: git init -b main
+3. Create README feature branch:
+   git checkout -b feature/add-documentation
+   # Write README.md.
+   git add README.md
+   git commit -m "added initial README"
+   git push -u origin feature/add-documentation
+4. Open, inspect, review and merge PR #1 on GitHub. Delete the merged remote branch.
+5. Synchronize and create an issue:
+   git checkout main
+   git pull origin main
+   git branch -d feature/add-documentation
+   # Create issue #2: Document software architecture and methodology.
+6. Create documentation branch and files:
+   git checkout -b docs/architecture-and-methodology
+   mkdir -p docs
+   touch docs/COMPONENTS.md docs/ARCHITECTURE.md docs/METHODOLOGY.md
+   ls -l docs
+7. Write COMPONENTS.md using the real modules and endpoints.
+8. Write ARCHITECTURE.md with the Mermaid diagram, lifecycle and ADRs.
+9. Write METHODOLOGY.md with SDLC, branching, Definition of Done and QA.
+10. Link docs in README, push and merge the documentation PR:
+   git add README.md docs/
+   git commit -m "Wrote documentation"
+   git push -u origin docs/architecture-and-methodology
+   # Open PR #3 with "Closes #2" in the description.
+   # Inspect its diff, record a review and merge. Issue #2 closes automatically.
+   git checkout main
+   git pull origin main
+   git branch -d docs/architecture-and-methodology
+11. Write Dockerfile and .dockerignore:
+   ls -la Dockerfile .dockerignore
+   git add Dockerfile .dockerignore README.md
+   git commit -m "Added Docker setup"
+   git push origin main
+12. Build, test, publish, remove local tags and pull the remote image:
+   python3 -m unittest discover -s tests -v
+   docker build -t group-task-board:1.0 .
+   docker run -d --rm --name lab8-task-board -p 127.0.0.1:8088:8080 group-task-board:1.0
+   curl http://127.0.0.1:8088/health
+   # Open http://localhost:8088 and test adding/completing tasks.
+   # If not already authenticated: docker login
+   docker tag group-task-board:1.0 bryanluu123/seg4105-lab8:1.0
+   docker tag group-task-board:1.0 bryanluu123/seg4105-lab8:latest
+   docker push bryanluu123/seg4105-lab8:1.0
+   docker push bryanluu123/seg4105-lab8:latest
+   docker stop lab8-task-board
+   docker rmi group-task-board:1.0 bryanluu123/seg4105-lab8:1.0 bryanluu123/seg4105-lab8:latest
+   docker run --pull=always -d --rm --name lab8-task-board -p 127.0.0.1:8088:8080 bryanluu123/seg4105-lab8:latest
+   curl http://127.0.0.1:8088/health
+   curl http://127.0.0.1:8088/api/tasks
+
+After the lab, stop just this container with: docker stop lab8-task-board
+To keep its data across container removals, add: -v lab8-task-data:/app/data
+
+The image was built and tested for linux/arm64. An x86_64 target needs a separate
+build using --platform linux/amd64. No other project is required to run this lab.
